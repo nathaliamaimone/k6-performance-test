@@ -17,4 +17,4 @@ jobs:
       - name: Executar Testes de Carga com K6
         uses: grafana/k6-action@v0.2.0
         with: 
-          filename: scripts-aws/aws-test.js
+          filename: k6-aws/scripts-aws/aws-test.js
