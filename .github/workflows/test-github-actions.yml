@@ -12,27 +12,9 @@ jobs:
 
     steps:
       - name: Checkout do Repositório
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 
 
       - name: Executar Testes de Carga com K6
         uses: grafana/k6-action@v0.2.0
         with: 
           filename: scripts-aws/aws-test.js
-
-      - name: Organizar Relatório de Testes
-        run: |
-          mkdir -p report
-          mv index.html report/
-
-      - name: Upload do Relatório de Testes
-        uses: actions/upload-artifact@v3
-        with: 
-          name: relatorio-testes-performance
-          path: report
-
-      - name: Publicar Relatório no GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: report
