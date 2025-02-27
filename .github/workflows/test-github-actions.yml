@@ -29,3 +29,10 @@ jobs:
         with:
           name: relatorio-testes-performance
           path: report
+
+      - name: Publicar Relatório no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: report
