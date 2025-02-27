@@ -16,5 +16,16 @@ jobs:
 
       - name: Executar Testes de Carga com K6
         uses: grafana/k6-action@v0.2.0
-        with: 
+        with:
           filename: k6-aws/scripts-aws/aws-test.js
+
+      - name: Organizar Relatório de Testes
+        run: |
+          mkdir -p report
+          mv index.html report/
+
+      - name: Upload do Relatório de Testes
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-testes-performance
+          path: report
