@@ -19,10 +19,14 @@ jobs:
         with:
           filename: k6-aws/scripts-aws/aws-test.js
 
-      - name: Organizar Relatório de Testes
+      - name: Verificar Arquivos Gerados
         run: |
-          mkdir -p report
-          mv index.html report/
+            echo "Antes da movimentação:"
+            ls -R
+            echo "Depois da movimentação:"
+            mkdir -p report
+            mv index.html report/
+            ls -R report
 
       - name: Upload do Relatório de Testes
         uses: actions/upload-artifact@v4
