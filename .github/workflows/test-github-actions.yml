@@ -1,0 +1,44 @@
+name: K6 Load Test
+
+on: [push]
+
+permissions:
+  contents: write
+
+jobs:
+  performance-test:
+    name: Executar Testes de Carga com K6
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v4 
+
+      - name: Executar Testes de Carga com K6
+        uses: grafana/k6-action@v0.2.0
+        with:
+          filename: k6-aws/scripts-aws/aws-test.js
+
+      - name: Verificar Arquivos Gerados
+        run: |
+            echo "Antes da movimentação:"
+            ls -R
+            echo "Depois da movimentação:"
+            mkdir -p report
+            mv index.html report/
+            ls -R report
+
+      - name: Upload do Relatório de Testes
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-testes-performance
+          path: report
+
+      - name: Publicar Relatório no GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: report
+          force_orphan: true
+        
